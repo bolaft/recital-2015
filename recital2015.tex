@@ -4,33 +4,33 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
-\usepackage{tabularx, booktabs}
+\usepackage{booktabs}
 \usepackage[color=lightgray]{todonotes}
 \usepackage[authoryear]{natbib}
 \usepackage{amssymb}
 \usepackage{enumitem}
+\usepackage{tabularx}
 \usepackage{csquotes}
 
 % faire les \usepackage dont vous avez besoin AVANT le \usepackage{taln2014} 
 
 \usepackage{taln2015}
-\usepackage[frenchb]{babel}
+\usepackage[english, frenchb]{babel}
 
 \newcommand{\quotes}[1]{``#1''}
 
 % Titre complet
 \title{État de l'art : l'analyse du dialogue appliquée aux conversations écrites en ligne porteuses de demandes d'assistance}
 
-\author{Soufian Salim\\
-  LINA UMR 6241 - Université de Nantes, 2 rue de la houssinière, 44322 Nantes Cedex 03 \\ 
-  soufian.salim@univ-nantes.fr \\ 
-}
+% \author{Soufian Salim\\
+%   LINA UMR 6241 - Université de Nantes, 2 rue de la houssinière, 44322 Nantes Cedex 03 \\ 
+%   soufian.salim@univ-nantes.fr NE PAS OUBLIER LE FANCYHEAD \\ 
+% }
 
 % Titre qui apparait en en-tête (1 ligne maxi)
 \fancyhead[CO]{22$^{\textsl{\scriptsize \`eme}}$ Traitement Automatique des Langues Naturelles, Caen, 2015} 
 % Auteurs qui apparaissent en en-tête (1 ligne maxi)
-\fancyhead[CE]{Soufian SALIM} 
-
+% \fancyhead[CE]{Soufian SALIM}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
@@ -38,302 +38,238 @@
 
 \maketitle
 
-\resume{Le développement du Web 2.0 et le processus de création et de consommation massive de contenus générés par les utilisateurs qu'elle a enclenché a permis le développement de nouveaux types d'interactions chez les internautes. En particulier, nous nous intéressons au développement du support en ligne et des plate-formes d'entraide. En effet, les archives de conversations en ligne porteuses de demandes d'assistance représentent une ressource inestimable, mais peu exploitée. L'exploitation de cette ressource permettrait non seulement d'améliorer les systèmes liés à la résolution collaborative des problèmes, mais également de perfectionner les canaux de support clients proposés par les entreprises opérant sur le web. Pour ce faire, il est cependant nécessaire de définir un cadre formel pour l'analyse discursive de ce type de conversations. Cet article a pour objectif de présenter l’état de la recherche en analyse des conversations écrites en ligne, sous différents médiums, et de montrer dans quelle mesure les différentes méthodes exposées dans la littérature peuvent être appliquées à des conversations fonctionnelles inscrites dans le cadre de la résolution collaborative des problèmes utilisateurs.}
+\resume{Le développement du Web 2.0 et le processus de création et de consommation massive de contenus générés par les utilisateurs qu'elle a enclenché a permis le développement de nouveaux types d'interactions chez les internautes. En particulier, nous nous intéressons au développement du support en ligne et des plate-formes d'entraide. En effet, les archives de conversations en ligne porteuses de demandes d'assistance représentent une ressource inestimable, mais peu exploitée. L'exploitation de cette ressource permettrait non seulement d'améliorer les systèmes liés à la résolution collaborative des problèmes, mais également de perfectionner les canaux de support client proposés par les entreprises opérant sur le web. Pour ce faire, il est cependant nécessaire de définir un cadre formel pour l'analyse discursive de ce type de conversations. Cet article a pour objectif de présenter l’état de la recherche en analyse des conversations écrites en ligne, sous différents médiums, et de montrer dans quelle mesure les différentes méthodes exposées dans la littérature peuvent être appliquées à des conversations fonctionnelles inscrites dans le cadre de la résolution collaborative des problèmes utilisateurs.}
 \\
 
 \abstract{The advent of Web 2.0 and the massive process of creation and consumption of user generated content it triggered allowed for new kinds of interactions among web users. Indeed, freely available archives of problem-oriented online conversations represent an invaluable resource, however unfortunately it remains largely unexploited. Exploiting this resource would not only allow for the improvement of systems related to collaborative problem resolution, but also to refine the customer support channels that web-based companies put at their users' disposal. However, in order to achieve this, it is first necessary to define a formal framework for the fine-grained analysis of online written conversations bearing requests for assistance. This paper presents an overview of the state of the art for discourse analysis in online written conversations, for different mediums, and discusses the applicability of the different methods for the analysis of conversations set within the scope of collaborative problem-solving.}
 \\
 
-\motsClefs{Analyse discursive, Conversation, Problème / Solution, Taxonomie, Annotation}
-{Discourse analysis, Conversation, Problem / Solution, Taxonomy, Annotation}
+\motsClefs{Analyse discursive, Conversation, Résolution de problèmes, Schéma d'annotation, Acte du dialogue}
+{Discourse analysis, Conversation, Problem solving, Taxonomy, Annotation scheme}
 
 %%================================================================
 
 \section{Introduction}
 \label{sec:introduction}
 
-Le développement d'Internet a déclenché des révolutions majeures. Parmi elles, l'avènement du contenu généré par les utilisateurs. Avec le développement du Web 2.0 et l'accroissement des capacités d'interaction entre les internautes, nous avons été témoins d'un phénomène de démultiplication de l'information en ligne. Voilà plus de dix ans que les réseaux sociaux, les blogs, les forums et les autres formes de médias interactifs en ligne sont devenus d'usage courant. Sur ces plate-formes, de nombreux types d'interactions peuvent être identifiés. Nous nous intéressons tout particulièrement au cas des conversations fonctionnelles\footnote{Conversations construites autour d'une tâche, c'est-à-dire consacrées à la transmission d'information dans le but de réaliser un objectif individuel ou collectif.} orientées vers la résolution de problèmes, \textit{i.e.} celles s'opérant sur des plate-formes dont les utilisateurs sont invités à transmettre leurs demandes d'assistance à la communauté, qui en retour tente d'apporter son aide. Par exemple, demander comment configurer un routeur, où trouver une pièce pour réparer son véhicule, ou encore comment préparer des sushis. Ces conversations se retrouvent, notamment, sur des forums d'entraide (\textit{e.g.} CommentÇaMarche, CNET), des listes de diffusion\footnote{Aussi appellées \quotes{listes de discussion}.}, et des salons de chat (\textit{e.g.} canaux IRC). L'exploitation de cet ensemble massif de données représente un enjeu majeur pour les industriels et scientifiques qui s'intéressent aux problématiques liées à l'assistance aux utilisateurs.
+Le développement d'Internet a déclenché des révolutions majeures. Parmi elles, l'avènement du contenu généré par les utilisateurs. Avec le développement du Web 2.0 et l'accroissement des capacités d'interaction entre les internautes, nous avons été témoins d'un phénomène de démultiplication de l'information en ligne. Voilà plus de dix ans que les réseaux sociaux, les blogs, les forums et les autres formes de médias interactifs en ligne sont devenus d'usage courant. Sur ces plate-formes, de nombreux types d'interactions peuvent être identifiés. Nous nous intéressons tout particulièrement au cas des conversations fonctionnelles\footnote{Conversations construites autour d'une tâche, c'est-à-dire consacrées à la transmission d'information dans le but de réaliser un objectif individuel ou collectif.} orientées vers la résolution de problèmes, \textit{i.e.} celles s'opérant sur des plate-formes dont les utilisateurs sont invités à transmettre leurs demandes d'assistance à la communauté, qui en retour tente d'apporter son aide. Par exemple, demander comment configurer un routeur, où trouver une pièce pour réparer son véhicule, ou encore comment préparer des sushis. Ces conversations se retrouvent, notamment, sur des forums d'entraide (\textit{e.g.} CommentÇaMarche, CNET), des listes de diffusion\footnote{Aussi appellées \quotes{listes de discussion}.}, et des salons de chat (\textit{e.g.} canaux IRC). L'exploitation de cet ensemble massif de données représente un enjeu majeur pour les scientifiques et industriels qui s'intéressent aux problématiques liées à l'assistance aux utilisateurs.
 
-Par ailleurs, ce type de conversation se retrouve également dans des environnements privés et plus strictement contrôlés : les canaux d'assistance en ligne mis à disposition directement par les entreprises, pour leurs clients. L'importance de ces canaux n'est pas négligeable : disposer d'un service client en ligne efficace est devenu une part intégrale du succès pour les entreprises opérant sur le net. En effet, les compagnies basées sur le web savent depuis longtemps que le service client des commerces virtuels est tout aussi important que pour les magasins traditionnels \cite{bernett2000e}.
+Ce type de conversation se retrouve également dans des environnements privés et plus strictement contrôlés : les canaux d'assistance en ligne mis à disposition directement par les entreprises, pour leurs clients. L'importance de ces canaux n'est pas négligeable : disposer d'un service client en ligne efficace est devenu une part intégrale du succès pour les entreprises opérant sur le net. Les compagnies basées sur le web savent depuis longtemps que le service client des commerces virtuels est tout aussi important que pour les magasins traditionnels \cite{bernett2000e}.
 
 Ces demandes d'assistance sont le plus souvent gérées au cas par cas, ce qui mène à un nombre considérable de conversations redondantes pour des problèmes et questions communément soulevés. Dans le cas des forums et des listes de diffusion, les conversations sont généralement perpétuellement sauvegardées, permettant ainsi le partage de support entre utilisateurs. C'est-à-dire qu'elles dotent les utilisateurs de la capacité de faire des recherches dans les archives de la plate-forme pour essayer de trouver une solution documentée et directement applicable à leur situation. Bien que moins souvent exploités, les messages transmis dans les salons de chat peuvent aussi faire l'objet d'un archivage automatique. Dans le cas des systèmes de support client, les conversations sont toujours enregistrées et sont généralement manuellement exploitées. Cette exploitation se place, notamment, dans le cadre de l'évaluation des agents, de l'amélioration des techniques de marketing, ou de l'enrichissement des bases de connaissances et des FAQ (Foire Aux Questions).
 
 Un cadre bien défini permettant une analyse fine de ce type de conversations représenterait un socle solide sur lequel pourraient reposer différents systèmes liés à l'aide à la résolution des problèmes. Comme, par exemple, des systèmes de RI plus performants, pour aider les utilisateurs cherchant des solutions à leurs problèmes dans des archives de conversations. Ou encore, des systèmes automatiques d'enrichissement de bases de connaissances et de FAQ à partir de conversations résolues. Il est aussi possible d'imaginer des systèmes automatisés d'aide à la résolution des problèmes qui proposeraient automatiquement des solutions aux utilisateurs, ou au moins les redirigeraient directement vers un message comportant une solution validée pour un problème identique. Toutes ces applications seraient considérablement enrichies par les masses énormes de données qui sont actuellement librement disponibles sur Internet, mais très peu exploitées.
 
-Cet article a pour objectif de présenter l'état de la recherche en modélisation des conversations écrites en ligne, et de montrer dans quelle mesure les différentes approches proposées dans la littérature sont adaptées ou non à des applications liées à la problématique de l'assistance aux utilisateurs. Nous commençons d'abord par nous intéresser d'une manière générale aux théories fondatrices de l'analyse du dialogue, dans la section \ref{sec:dialog_analysis_theories}. Ensuite, en section \ref{sec:annotation_schemes}, nous verrons comment les concepts théoriques que nous aurons détaillé peuvent être appliqués dans le cadre de deux schémas d'annotation influents : DAMSL et DIT++. Enfin, en section \ref{sec:online_written_conversation_analysis}, nous examinerons divers travaux spécifiques à différents médiums en ligne (forums, courriels, chats), tout en gardant à l'esprit la problématique de l'assistance aux utilisateurs.
+Cet article a pour objectif de présenter l'état de la recherche en modélisation des conversations écrites en ligne, et de montrer dans quelle mesure les différentes approches proposées dans la littérature sont adaptées ou non à des applications liées à la problématique de l'assistance aux utilisateurs. Nous commençons par nous intéresser aux théories fondatrices de l'analyse du dialogue, dans la section \ref{sec:dialog_analysis_theories}. Ensuite, en section \ref{sec:annotation_schemes}, nous verrons comment leurs concepts peuvent être appliqués via deux schémas d'annotation influents : DAMSL (\textit{Dialog Act Markup in Several layers}) et DIT++ (\textit{Dynamic Information Theory ++}). Puis, en section \ref{sec:online_written_conversation_analysis}, nous examinerons divers travaux spécifiques à différents médiums en ligne (forums, courriels, chats), tout en gardant à l'esprit la problématique de l'assistance aux utilisateurs. Enfin, en section \ref{sec:conclusion_and_research_perspectives}, nous apporterons nos conclusions et présenterons quelques perspectives de recherche.
 
 \section{Théories pour l'analyse du dialogue}
 \label{sec:dialog_analysis_theories}
 
-Nous nous intéressons dans cette section aux actes du discours\footnote{Aussi appelés \quotes{actes du langage}}, qui sont largement utilisés dans les études sur les phénomènes conversationnels, dans les travaux d'annotation des dialogues, et dans la conception d'agents conversationnels\footnote{Systèmes informatiques conçus pour converser avec des êtres humains.}. Nous commençons par expliquer ce qu'est la théorie des actes du discours en sous-section \ref{subsec:speech_acts}, puis, en sous-section \ref{subsec:applications_in_conversation_analysis}, nous voyons comment ces fondements théoriques ont été étendus vers l'analyse des conversations au travers des travaux de \citet{traum1992conversation} et \citet{poesio1997conversational}.
+Nous nous intéressons dans cette section aux actes du discours\footnote{Aussi appelés \og actes du langage \fg}, qui sont largement utilisés dans les études sur les phénomènes conversationnels, dans les travaux d'annotation des dialogues, et dans la conception d'agents conversationnels\footnote{Systèmes informatiques conçus pour converser avec des êtres humains.}. Nous commençons par expliquer ce qu'est la théorie des actes du discours avant de voir comment ces fondements théoriques ont été étendus vers l'analyse des conversations au travers des travaux de \citet{traum1992conversation} et \citet{poesio1997conversational}.
 
 \subsection{Actes du discours}
 \label{subsec:speech_acts}
 
-Dans cette partie nous nous intéressons à la théorie des actes du discours développée par \citet{austin1975how} et \citet{searle1969speech}.
+En linguistique et en philosophie du langage, un acte du discours est un énoncé porteur d'une fonction performative. En effet, pour \citeauthor{austin1975how}, qui a introduit le terme dans la langue contemporaine, les énonciations doivent être considérées comme des actions effectuées par le locuteur. Apparaît ici l’idée selon laquelle tout acte d’énonciation serait la réalisation d’un acte social. Les verbes qui spécifient ces actions sont appelés verbes performatifs (\textit{i.e.} \textit{\og Je vous confère le titre de capitaine \fg}). Mais les actes du langage ne sont pas constitués uniquement de ces types de verbes. 
 
-\subsubsection{Principes}
+\citet{austin1975how} développe une théorie des actes du langage défendant la thèse selon laquelle tout énoncé peut être analysé à trois niveaux. D'abord, au niveau locutoire : il s'agit de sa forme de surface, \textit{i.e.} de la signification de l'énoncé, représenté par ses aspects phonétique, syntaxique et sémantique. Puis au niveau de l'acte illocutoire, porteur de l'intention rhétorique du locuteur. Et enfin, au niveau de l'acte perlocutoire, qui s'intéresse aux conséquences de l'exécution de l'énoncé ou de son interprétation par les allocutaires : à son effet pragmatique.
 
-En linguistique et en philosophie du langage, un acte du discours est un énoncé porteur d'une fonction performative. En effet, pour \citeauthor{austin1975how}, qui a introduit le terme dans la langue contemporaine, les énonciations doivent être considérées comme des actions effectuées par le locuteur. Apparaît ici l’idée selon laquelle tout acte d’énonciation serait la réalisation d’un acte social. Les verbes qui spécifient ces actions sont appelés verbes performatifs (\textit{i.e.} \textit{<<Je vous confère le titre de capitaine>>}). Mais les actes du langage ne sont pas constitués uniquement de ces types de verbes. 
+La notion d'acte illocutoire est centrale au concept d'acte du langage. Cet acte permet de décrire les énoncés en termes de fonctions communicatives portées par chacun d’eux (\textit{e.g.} question, réponse, remerciement...). \citeauthor{austin1975how} propose cinq classes d'actes du discours : les verdictifs (qui donnent un verdict), les exercitifs (qui exercent un pouvoir), les promissifs (qui engagent le locuteur à faire quelque chose), les comportatifs (en rapport avec l'attitude, le comportement) et les expositifs (qui exposent de l'information). 
 
-\citet{austin1975how} développe une théorie des actes du langage défendant la thèse selon laquelle tout énoncé peut être analysé à trois niveaux. D'abord, au niveau locutoire : il s'agit de sa forme de surface, \textit{i.e.} de la signification de l'énoncé, représenté par ses aspects phonétique, syntaxique et sémantique. Puis au niveau de l'acte illocutoire, porteur de l'intention rhétorique du locuteur. Et enfin, au niveau de l'acte perlocutoire, qui s'intéresse aux conséquences de l'énoncé sur le monde réel, à son effet pragmatique. 
-
-\subsubsection{Taxonomies fondatrices}
+Pour \citet{searle1969speech}, dont la conception des actes du discours diffère légèrement de celle d'\citeauthor{austin1975how}, tout acte du discours est illocutoire (sa définition se rapproche ainsi de ce que \citeauthor{austin1975how} appelle \quotes{acte du dialogue}). Il propose cinq classes d’actes : les assertifs (affirmer un état de fait), les directifs (pousser un interlocuteur à faire quelque chose), les promissifs (s'engager à agir), les expressifs (exprimer un état psychologique) et les déclaratifs (faire une déclaration ayant un impact réel, \textit{e.g.} prononcer un jugement) \cite{searle1976taxonomy}. La table \ref{fig:fundamentalTaxonomies} illustre ces deux taxonomies fondatrices et montre comment elles peuvent être alignées.
 
 \begin{table}
 	\centering
-	\begin{tabular}{c c c}
+	\begin{tabular}{lll}
 		\toprule
-		Acte & Exemples & Référence \\
+		\multicolumn{1}{c}{\citet{austin1975how}} & \multicolumn{1}{c}{\citet{searle1976taxonomy}} & \multicolumn{1}{c}{Exemples} \\
 		\midrule
-		Verdictif & acquitter, condamner, décréter... & \\
-		Exercitif & dégrader, commander, ordonner, pardonner, léguer... & \\
-		Promissif & promettre, faire vœu de, garantir, parier, jurer de... & \citet{austin1975how} \\
-		Comportatif & s’excuser, remercier, déplorer, critiquer... & \\
-		Expositif & affirmer, nier, postuler, remarquer... & \\
-		\midrule
-		Assertif & assertion, affirmation & \\
-		Directif & ordre, demande, conseil & \\
-		Promissif & promesse, offre, invitation & \citet{searle1976taxonomy} \\
-		Expressif & félicitation, remerciement & \\
-		Déclaratif & déclaration de guerre, nomination, baptême & \\
+		Expositifs & Assertifs & affirmer, nier, postuler, remarquer... \\
+		Exercitifs & Directifs & commander, conseiller, ordonner, pardonner, léguer... \\
+		Promissifs & Promissifs & promettre, inviter, faire vœu de, garantir, parier, jurer de...  \\
+		Comportatifs & Expressifs & s’excuser, remercier, féliciter, déplorer, critiquer... \\
+		Verdictifs & Déclaratifs & acquitter, condamner, décréter, baptiser... \\
 		\bottomrule
 	\end{tabular}
-	\caption{Taxonomies fondatrices en théorie des actes du langage}
+	\caption{Taxonomies fondatrices en théorie des actes du langage, alignées}
 	\label{fig:fundamentalTaxonomies}
 \end{table}
 
-La notion d'acte illocutoire est centrale au concept d'acte du langage. C'est lui qui permet de décrire les énoncés en termes de fonctions communicatives portées par chacun d’eux (\textit{e.g.} question, réponse, remerciement...). \citeauthor{austin1975how} propose cinq classes d'actes du discours : les verdictifs (donner un verdict), les exercitifs (exercer un pouvoir), les promissifs (s'engager à faire quelque chose), les comportatifs (en rapport avec l'attitude, le comportement) et les expositifs (qui exposent de l'information). 
-
-Pour \citet{searle1969speech}, dont la conception des actes du discours diffère légèrement de celle d'\citeauthor{austin1975how}, tout acte du discours est illocutoire (sa définition se rapproche ainsi de ce que \citeauthor{austin1975how} appelle \quotes{acte du dialogue}). Il propose cinq classes d’actes : les assertifs (affirmation d’un état de fait), les directifs (tentative de pousser un interlocuteur à faire quelque chose), les promissifs (engagement de la part du locuteur), les expressifs (expression d’un état psychologique) et les déclaratifs (déclaration ayant un impact direct) \cite{searle1976taxonomy}. La table \ref{fig:fundamentalTaxonomies} illustre ces deux taxonomies fondatrices.
-
-\subsubsection{Impact scientifique et applications}
-
-Historiquement, cette théorie a rapidement gagné en influence dans un ensemble varié de disciplines. En psychologie, par exemple, il a été suggéré que l'acquisition des actes du discours puisse être un prérequis pour l'acquisition du langage en général \cite{bruner1975communication, bates1977gesture}. Des critiques littéraires se sont tourné vers \citeauthor{austin1975how} pour mettre en lumière des subtilités textuelles \cite{ohmann1971speech}. En linguistique, des chercheurs ont trouvé que des notions de la théorie des actes du discours permettait d'expliquer des problèmes en syntaxe \cite{sadock1974toward}, en sémantique \cite{fillmore1971some} et en apprentissage d'un second langage \cite{jakobovits1974context}. Même en philosophie, des applications pouvaient être trouvées, par exemple pour déterminer le statut de postulats éthiques \cite{searle1969speech}.
+Historiquement, cette théorie a rapidement gagné en influence dans un ensemble de disciplines varié. En psychologie, par exemple, il a été suggéré que l'acquisition des actes du discours puisse être un prérequis pour l'acquisition du langage \cite{bruner1975communication, bates1977gesture}. Des experts littéraires se sont tournés vers \citeauthor{austin1975how} pour mettre en lumière des particularités textuelles \cite{ohmann1971speech}. En linguistique, des chercheurs ont trouvé que des notions de la théorie des actes du discours permettaient d'expliquer des problèmes en sémantique \cite{fillmore1971some}, en syntaxe \cite{sadock1974toward} et en apprentissage d'un second langage \cite{jakobovits1974context}. Même en philosophie, des applications pouvaient être trouvées, par exemple pour déterminer le statut de postulats éthiques \cite{searle1969speech}.
 
 En informatique, les actes du discours sont communément utilisés pour modéliser les conversations dans le cadre d'applications de classification automatique et de recherche d'information \cite{twitchell2004using}. Des modèles pour l'interaction homme-machine ont également été développés en se basant sur ces concepts \cite{morelli1991computational}. Ainsi, dans la plupart des travaux liés à la linguistique informatique, c’est en termes d’actes du langage que les interactions entre participants d’une conversation sont modélisées.
 
-\subsection{Applications dans le cadre de l'analyse des conversations}
+\subsection{Applications à l'analyse des conversations}
 \label{subsec:applications_in_conversation_analysis}
 
-% \todo[inline]{\textit{La théorie des actes de discours et l'analyse de la conversation} \cite{vanderveken1994theorie} : étend la théorie des actes du discours à l'analyse des conversations.}
+Jusque dans les années 1990, la théorie des actes de discours s'est largement limitée à l'examen d'énoncés isolés, et n'a pas cherché à prendre en charge l'analyse de conversations entières où plusieurs participants peuvent interagir \cite{vanderveken1994theorie}. Cependant, les locuteurs accomplissent des actes illocutoires tout au long des conversations qu'ils peuvent avoir avec d'autres participants. \citeauthor{vanderveken1994theorie} souligne que ces autres participants répondent et accomplissent à leur tour leurs propres actes du langage, tout en cherchant collectivement à atteindre des objectifs discursifs communs. Une application sociale du langage est donc constituée, en général, de séquences ordonnées d'énoncés par différents locuteurs qui cherchent ensemble à poursuivre un même but, comme résoudre un problème, décider d'une marche à suivre, etc.
 
-Jusque dans les années 1990, la théorie des actes de discours s'est largement limité à l'examen d'énoncés isolés, et n'a pas cherché à prendre en charge l'analyse de conversations entières où plusieurs participants peuvent chercher collectivement à atteindre des buts discursifs communs \cite{vanderveken1994theorie}. Cependant, les locuteurs accomplissent des actes illocutoires tout au long des conversations qu'ils peuvent avoir avec d'autres participants. \citet{vanderveken1994theorie} souligne que ces autres participants répondent et accomplissent à leur tour leurs propres actes du langage, tout le monde partageant la même intention de poursuivre avec succès un certain type de discours. Une application sociale du langage est donc constituée, en général, de séquences ordonnées d'énoncés par différents locuteurs qui cherchent ensemble à poursuivre un même but, comme trouver la réponse à une question, décider d'une marche à suivre, etc.
+\subsubsection{Théorie des actes de la conversation}
 
-\subsubsection{Théorie des actes de la conversation (\textit{Conversation Act Theory})}
+Dans la perspective d'étendre la théorie des actes du discours vers ce paradigme, \citet{traum1992conversation} décrivent une théorie des \textit{actes de la conversation} (\textit{Conversation Act Theory}), qui se veut plus générale. Ils étudient le corpus TRAINS \cite{gross1993trains}\footnote{\citeauthor{traum1992conversation} ont utilisé des données tirées de \cite{gross1993trains} avant leur publication, d'où l'apparente incohérence des dates.}, tiré du projet homonyme, dont l'objectif est de développer un assistant de planification intelligent qui puisse communiquer en langage naturel avec des opérateurs humains. Le corpus est constitué de dialogues fonctionnels entre un manager devant résoudre des problèmes de planification et une personne jouant le rôle du système, disposant d'informations additionnelles sur la tâche, et chargé d'assister le manager. 
 
-Dans la perspective d'étendre la théorie des actes du discours vers ce paradigme, \citet{traum1992conversation} décrivent une théorie des \textit{actes de la conversation}, qui se veut plus générale. Ils étudient le corpus TRAINS \cite{gross1993trains}\footnote{\citeauthor{traum1992conversation} ont utilisé des données tirées de \cite{gross1993trains} avant leur publication, d'où l'apparente incohérence des dates.}, tiré du projet homonyme, dont l'objectif est de développer un assistant de planification intelligent qui puisse communiquer en langage naturel avec des opérateurs humains. Le corpus est constitué de dialogues fonctionnels entre un manager devant résoudre des problèmes de planification et une personne jouant le rôle du système, disposant d'informations additionnelles sur la tâche, et chargé d'assister le manager. 
+\citeauthor{traum1992conversation} constatent que l'un des traits les plus flagrants des dialogues fonctionnels est la prépondérance des signes d'accord et d'acquittement (\textit{e.g.} \textit{\og There are oranges at Corning, right? \fg{} \og Right. \fg}). C'est l'un des éléments qui les poussent à remettre en question certains postulats généralement implicites dans les travaux antérieurs. Le premier de ces postulats voudrait que les énoncés soient toujours entendus et correctement compris par les allocutaires, d'une part, et que les participants ne s'attendent jamais à ce que ce ne soit pas le cas, d'autre part. Mais non seulement les énoncés sont souvent mal compris ou mal perçus, mais en plus \citeauthor{traum1992conversation} avancent que les conversations sont structurées de manière à prendre en compte ce phénomène : les participants cherchent systématiquement à obtenir des preuves que leur interlocuteur a bien compris ce qu'il voulaient dire. Ces preuves peuvent prendre la forme d'un acquittement explicite (\textit{e.g.} \textit{\og Right. \fg}), d'un acquittement implicite via une réaction pertinente (par exemple en répondant à la question posée), ou encore par des signaux non-verbaux (hochement de tête, \textit{etc.}). Cette quasi-nécessité de l'acquittement les pousse également à remettre en cause l'idée selon laquelle les actes du discours sont des actions réalisées uniquement par le locuteur, et que l'allocutaire n'a qu'une fonction passive face à eux. Les actes du discours ne peuvent être analysés que dans le contexte d'un dialogue multi-agent. Enfin, le troisième postulat que \citeauthor{traum1992conversation} remet en cause suite à cette observation, c'est que chaque énoncé n'est porteur que d'un seul acte du discours. En effet, si certains énoncés peuvent non seulement réaliser leur fonction communicative affichée et en plus servent à acquitter un autre énoncé, c'est qu'ils peuvent réaliser deux actes simultanément.
 
-\citeauthor{traum1992conversation} constatent que l'un des traits les plus flagrants des dialogues fonctionnels est la prépondérance des signes d'accord et d'acquittement (\textit{e.g.} \textit{<<There are oranges at Corning, right?>> <<Right.>>}). C'est l'un des éléments qui les poussent à remettre en question certains postulats généralement implicites dans les travaux antérieurs. Le premier de ces postulats voudrait que les énoncés soient toujours entendus et correctement compris par les allocutaires, d'une part, et que les participants ne s'attendent jamais à ce que ce ne soit pas le cas, d'autre part. Mais non seulement les énoncés sont souvent mal compris ou mal perçus, mais en plus \citeauthor{traum1992conversation} avancent que les conversations sont structurées de manière à prendre en compte ce phénomène : les participants cherchent systématiquement à obtenir des preuves que leur interlocuteur a bien compris ce qu'il voulaient dire. Ces preuves peuvent prendre la forme d'un acquittement explicite (\textit{e.g.} \textit{<<Right.>>}), d'un acquittement implicite via une réaction pertinente (par exemple en répondant à la question posée), ou encore par des signaux non-verbaux (hochement de tête, \textit{etc.}). Cette quasi-nécessité de l'acquittement les pousse également à remettre en cause l'idée selon laquelle les actes du discours sont des actions réalisées uniquement par le locuteur, et que l'allocutaire n'a qu'une fonction passive face à eux. Les actes du discours ne peuvent être analysés que dans le contexte d'un dialogue multi-agent. Enfin, le troisième postulat que cette observation permet à \citeauthor{traum1992conversation} de remettre en cause, c'est que chaque énoncé n'est porteur que d'un seul acte du discours. En effet, si certains énoncés peuvent non seulement réaliser leur fonction communicative affichée et en plus servent à acquitter un autre énoncé, c'est qu'ils peuvent réaliser deux actes simultanément.
+La taxonomie des actes de la conversation qu'ils proposent prend en compte ces trois observations. Elle détaille une catégorisation de ces actes en quatre classes : les actes de prise de parole (\textit{turn-taking acts}), les actes de synchronisation (\textit{grounding acts}), les actes du discours fondamentaux (\textit{core speech acts}), et les actes argumentatifs (\textit{argumentation acts}). Les actes de prise de parole se situent à un niveau inférieur à l'énoncé, les actes de synchronisation au niveau de l'énoncé, tandis que les actes du discours fondamentaux (informer, promettre et requérir) se trouvent au niveau de ce qu'ils appellent une \og unité du discours \fg. Cette unité peut contenir un énoncé introductif suivi d'autant d'énoncés de synchronisation que nécessaire pour assurer une bonne communication (\textit{e.g.} \textit{\og Because there are oranges in Vermont. Right? You agree? \fg}). Enfin, les actes argumentatifs se situent à un niveau encore supérieur puisqu'ils peuvent contenir un nombre illimité d'unités du discours dont les actes fondamentaux sont utilisés pour former des composés complexes (par exemple le descriptif d'un système, l'exposé d'un problème \textit{etc.}).
 
-La taxonomie des actes de la conversation qu'ils proposent prend en compte ces trois observations. Elle détaille une catégorisation de ces actes en quatre classes : les actes de prise de parole (\textit{<<turn-taking acts>>}), les actes de synchronisation (\textit{<<grounding acts>>}), les actes du discours fondamentaux (\textit{<<core speech acts>>}), et les actes argumentatifs (\textit{<<argumentation acts>>}). Les actes de prise de parole se situent à un niveau inférieur à l'énoncé, les actes de synchronisation au niveau de l'énoncé, tandis que les actes du discours fondamentaux (informer, promettre et requérir) se trouvent au niveau de ce qu'ils appellent une <<unité du discours>>. Cette unité peut contenir un énoncé introductif suivi d'autant d'énoncés de synchronisation que nécessaire pour assurer une bonne communication (\textit{e.g.} \textit{<<Because there are oranges in Vermont. Right? You agree?>>}). Enfin, les actes argumentatifs se situent à un niveau encore supérieur puisqu'ils peuvent contenir un nombre illimité d'unités du discours dont les actes fondamentaux sont utilisés pour former des composés complexes (par exemple le descriptif d'un système, l'exposé d'un problème \textit{etc.}).
+\subsubsection{Contexte et connaissances communes}
 
-Comme nous le verrons dans la section suivante, ce sont plutôt des actes de la conversation au sens de \citeauthor{traum1992conversation} que de purs actes du langage que modélisent DAMSL et DIT++. Ils apparaissent dans ces travaux sous le nom d'\textit{<<actes du dialogue>>}, un terme communément utilisé dans la littérature, mais dont la définition est rarement explicitée.
+\citeauthor{poesio1997conversational} s'accordent à dire que les conversations, même fonctionnelles, ont des aspects nettement séparés de la réalisation de la tâche qui en est l'objet \cite{poesio1998towards}, et que l'exercice du langage est une action coordonnée, ce qui impose le développement d'une théorie du \textit{contexte} \cite{poesio1997conversational}. Les théories développées à ce sujet se déclinent en deux traditions bien contrastées : d'une part, les approches linguistiques construites autour notamment de la résolution d'anaphores, et d'autre part les modèles computationnels proposés pour représenter les effets des actes du discours sur les participants d'une conversation, par exemple en termes de croyances, d'obligations et de besoins. C'est bien évidemment cette deuxième approche qui nous intéresse, puisque la première n'a que peu de rapport avec les exercices de planification et de coordination de l'information qui sont propres aux conversations fonctionnelles, et \textit{a fortiori} aux conversations orientées vers la résolution de problèmes.
 
-\subsubsection{Contexte et \textit{<<common ground>>}}
-
-\citeauthor{poesio1997conversational} continuent dans cette lancée. Ils s'accordent à dire que les conversations, même fonctionnelles, ont des aspects nettement séparés de la réalisation de la tâche qui en est l'objet \cite{poesio1998towards}, et que l'exercice du langage est une action coordonnée, ce qui impose le développement d'une théorie du \textit{contexte} \cite{poesio1997conversational}. Les théories développées à ce sujet se déclinent en deux traditions bien contrastées : d'une part, les approches linguistiques construites autour notamment de la résolution d'anaphores, et d'autre part les modèles computationnels proposés pour représenter les effets des actes du discours sur les participants d'une conversation, par exemple en terme de croyances, d'obligations et de besoins. C'est bien évidemment cette deuxième approche qui nous intéresse, puisque la première n'a que peu de rapport avec les exercices de planification et de coordination de l'information qui sont propres aux conversations fonctionnelles, et \textit{a fortiori} aux conversations orientées vers la résolution de problèmes.
-
-Quand \citeauthor{poesio1997conversational} parlent de contexte, ils font référence à l'information que les participants doivent utiliser pour interpréter les énoncés d'une conversation. Ce contexte est caractérisé notamment par la notion, centrale, de \textit{<<common ground>>} (ou <<terrain d'entente>>) entre les participants. Cette information est cruciale pour pouvoir comprendre à quoi un énoncé fait référence, puisque c'est le contexte qui contient tous les référents disponibles, les référents étant ajoutés au terrain d'entente au travers des nouveaux actes du discours qui sont accomplis. Bien modéliser ce \textit{<<common ground>>} nécessite de bien modéliser les mises à jour du contexte, ce qui est l'objet des deux schémas d'annotation décrits en section \ref{sec:annotation_schemes}.
+Quand \citeauthor{poesio1997conversational} parlent de contexte, ils font référence à l'information que les participants doivent utiliser pour interpréter les énoncés d'une conversation. Ce contexte est caractérisé notamment par la notion, centrale, de \textit{connaissances communes}, ou \og terrain d'entente \fg{} (\textit{common ground}) entre les participants. Cette information est cruciale pour pouvoir comprendre à quoi un énoncé fait référence, puisque c'est le contexte qui contient tous les référents disponibles, les référents étant ajoutés aux connaissances communes au travers des nouveaux actes du discours qui sont accomplis. Bien modéliser ces connaissances nécessite de bien modéliser les mises à jour du contexte, ce qui est l'objet des deux schémas d'annotation décrits en section \ref{sec:annotation_schemes}.
 
 \section{Schémas d'annotation}
 \label{sec:annotation_schemes}
 
-Typiquement, l'annotation des conversations en termes d'actes du discours (ou d'actes du dialogue) suit l'une de deux approches distinctes. La première approche, ontologique, consiste à proposer une taxonomie spécifique au domaine ou à la tâche étudiée. La seconde, plus ambitieuse, cherche à atteindre une couverture plus générique du dialogue \cite{leech2003generic}. C'est le cas de deux schémas d'annotation largement utilisés : DAMSL\footnote{\textit{Dialog Act Markup in Several Layers}} et DIT++\footnote{\textit{Dynamic Information Theory ++}}.
+L'annotation des conversations en termes d'actes du discours peut suivre deux approches. La première, ontologique, consiste à proposer une taxonomie spécifique au domaine ou à la tâche étudiée. La seconde, plus ambitieuse, cherche à atteindre une couverture plus générique du dialogue \cite{leech2003generic}. C'est le cas de deux schémas d'annotation largement utilisés : DAMSL et DIT++. Ce sont plutôt des actes de la conversation au sens de \citeauthor{traum1992conversation} que de purs actes du langage qu'ils cherchent à modéliser. Ces actes apparaissent dans ces travaux sous le nom d'\textit{actes du dialogue}.
 
 \subsection{DAMSL}
 \label{subsec:DAMSL}
 
-Le schéma d'annotation DAMSL part du principe que les applications nécessitant une analyse automatique du dialogue doivent prendre en compte les modifications dynamiques du \textit{<<common ground>>}, et pour ce faire propose d'annoter les \textit{fonctions communicatives} des actes du dialogue. Pour \citet{core1997coding}, ces fonctions doivent représenter des manipulations directes du contexte informationnel d'une conversation. La première caractéristique de la taxonomie de DAMSL est donc que l'on annote les actes en tant qu'\textit{opérations de mise à jour du contexte}.
+Le schéma d'annotation DAMSL part du principe que les applications nécessitant une analyse automatique du dialogue doivent prendre en compte les modifications dynamiques du \og terrain d'entente \fg, et pour ce faire propose d'annoter les \textit{fonctions communicatives} des actes du dialogue. Pour \citet{core1997coding}, ces fonctions doivent représenter des manipulations directes du contexte informationnel d'une conversation. La première caractéristique de la taxonomie de DAMSL est donc qu'elle permet d'annoter les actes en tant qu'\textit{opérations de mise à jour du contexte}.
 
-Un deuxième aspect important du schéma DAMSL est sa multi-dimensionnalité. En effet, une de limites de la théorie des actes du discours d'\citeauthor{austin1975how} et \citeauthor{searle1969speech} qui a été le plus souvent soulignée par les chercheurs est son incapacité à prendre en compte la pluralité des intentions qu'un locuteur peut chercher à exprimer dans un seul énoncé. Comme préconisé par \citet{traum1992conversation}, la taxonomie proposée par \citeauthor{core1997coding} prend en compte ce problème et autorise l'application de plusieurs labels à un seul énoncé, sur plusieurs couches du discours.
+Un deuxième aspect important du schéma DAMSL est sa multi-dimensionnalité. En effet, une des limites de la théorie des actes du discours d'\citeauthor{austin1975how} et \citeauthor{searle1969speech}, qui a été souvent soulignée par les chercheurs, est son incapacité à prendre en compte la pluralité des intentions qu'un locuteur peut chercher à exprimer dans un seul énoncé. Comme préconisé par \citet{traum1992conversation}, la taxonomie proposée par \citeauthor{core1997coding} prend en compte ce problème et autorise l'application de plusieurs étiquettes à un seul énoncé.
 
-Un troisième attribut important de DAMSL, et probablement celui qui a le plus contribué à sa popularité, est son caractère générique. Les classes de fonctions communicatives proposées sont toutes de suffisamment haut niveau pour pouvoir être attribuées à différents types de dialogues. Néanmoins, le schéma se focalise nettement sur les conversations fonctionnelles, et a d'ailleurs été d'abord développé autour du même corpus TRAINS que les travaux que nous avons détaillé en sous-section \ref{subsec:applications_in_conversation_analysis}.
+Un troisième attribut important de DAMSL, et probablement celui qui a le plus contribué à sa popularité, est son caractère générique. Les annotations proposées sont toutes de suffisamment haut niveau pour pouvoir être appliquées à différents types de dialogues. Néanmoins, le schéma se focalise nettement sur les conversations fonctionnelles, et a d'ailleurs été d'abord développé autour du même corpus TRAINS que les travaux que nous avons détaillé en sous-section \ref{subsec:applications_in_conversation_analysis}.
 
-\subsubsection{Trois couches : fonctions \textit{backward-looking}, fonctions \textit{forward-looking} et traits énonciatifs}
+\subsubsection{Quatre catégories d'étiquettes : fonctions prospectives, fonctions rétrospectives, niveau d'information et statut communicatif}
 
 Certains énoncés sont de toute évidence liés entre eux. Par exemple, prenons l'échange suivant :
 
 \begin{enumerate}
-	\item P1 : <<Le ciel commence à se dégager.>>
-	\item P1 : <<Quelle heure est-il ?>>
-	\item P2 : <<Il est bientôt midi.>>
+	\item Participant 1 : \og \textit{Le ciel commence à se dégager.} \fg
+	\item Participant 1 : \og \textit{Quelle heure est-il ?} \fg
+	\item Participant 2 : \og \textit{Il est bientôt midi.} \fg
 \end{enumerate}
 
-Il est immédiatement apparent que l'énoncé 3 fait réponse à l'énoncé 2. Pourtant, les deux apportent une information factuelle au contexte, et pourraient être classés comme "informer". \citeauthor{core1997coding} notent que si des travaux avaient déjà tenté de répondre à ce problème en proposant des sous-classes de type "informer-répondre" ou "informer-accepter", ce n'est pas satisfaisant car les actes d'acquitter, de répondre ou d'accepter un énoncé semblent apparaître à une classe bien distincte de "informer". Ils proposent donc d'appeler les fonctions de ces actes \textit{<<backward-looking>>}, puisqu'elles sont orientées vers la partie antérieure de la conversation. Les autres fonctions (\textit{e.g.} affirmer, ordonner, promettre \textit{etc.}) sont donc appelées \textit{<<forward-looking>>}, puisqu'elles impactent la partie ultérieure de la conversation.
+Il est immédiatement apparent que l'énoncé 3 fait réponse à l'énoncé 2, et diffère en ce sens de l'énoncé 1, qui n'a pas été sollicité. Pourtant, les deux apportent une information factuelle au contexte, et pourraient être classés comme "informer". \citeauthor{core1997coding} notent que si des travaux avaient déjà tenté de répondre à ce problème en proposant des sous-classes de type "informer-répondre" ou "informer-accepter", ce n'est pas satisfaisant car les actes d'acquitter, de répondre ou d'accepter un énoncé semblent appartenir à un genre d'actes bien distinct de "informer". Ils disent des fonctions de ces actes qu'elles sont \textit{rétrospectives} (\textit{backward-looking}), puisqu'elles sont orientées vers la partie antérieure de la conversation. Les autres fonctions (\textit{e.g.} affirmer, ordonner, promettre, \textit{etc.}) sont donc dites \textit{prospectives} (\textit{forward-looking}), puisqu'elles impactent la partie ultérieure de la conversation. Ces deux groupes de fonctions constituent les deux premières catégories de d'étiquettes\footnote{Ces super catégories sont appelées \og couches \fg{} (\textit{layers}) dans la documentation de DAMSL.} de la taxonomie DAMSL. Ce sont elles qui permettent d'étiqueter les énoncés par leur intention communicative.
 
-La troisième couche d'actes communicatifs définie par DAMSL est celle des traits énonciatifs (\textit{Utterance Features}). Ces traits cherchent à capturer les propriétés du contenu des énoncés. Elle est représentée par des classes indiquant sur quoi l'énoncé porte (si il porte directement sur la tâche, sur le processus de communication, ou du processus de résolution de la tâche). Ils permettent également d'identifier les énoncés qui peuvent être ignorés sans danger (parce qu'incompréhensibles ou interrompus), ainsi qu'à marquer les énoncés de formes conventionnelles (\textit{e.g.} <<Bonjour !>>) et exclamatives (\textit{e.g.} <<Ah !>>).
+Les deux autres catégories définies par DAMSL sont celles des traits énonciatifs (\textit{Utterance Features}). Ces traits ne s'intéressent pas à la fonction communicative de l'énoncé, mais capturent les propriétés de son contenu. Ils indiquent sur quoi l'énoncé porte (si il porte directement sur la tâche, sur le processus de communication, du processus de résolution de la tâche, ou d'autre chose): c'est la catégorie \textit{niveau d'information} (\textit{Information Level}). Ils permettent également d'identifier les énoncés qui peuvent être ignorés sans danger (parce qu'incompréhensibles ou interrompus) : c'est la catégorie \textit{statut communicatif} (\textit{Communicative Status}).
 
 \subsubsection{Taxonomie}
 
-La taxonomie précise des trois couches considérées par DAMSL est la suivante :
+Les quatre catégories de la taxonomie sont détaillées en figure \ref{fig:DAMSLTaxonomy}\footnote{Nous avons choisi de conserver les noms originaux en anglais pour ne pas dénaturer la taxonomie.} :
 
-\begin{center}
-\noindent\parbox[t]{2.2in}{\raggedright%
-\textbf{Fonctions \textit{backward-looking}}
-\begin{itemize}[topsep=0pt,itemsep=-2pt,leftmargin=15pt]
-	\item \textit{Agreement }
-	\begin{itemize}
-		\item \textit{Accept}
-		\item \textit{Accept-Part}
-		\item \textit{Maybe}
-		\item \textit{Reject-Part}
-		\item \textit{Reject}
-		\item \textit{Hold}
-	\end{itemize}
-	\item \textit{Understanding}
-	\begin{itemize}
-		\item \textit{Signal-Non-Understanding}
-		\item \textit{Signal-Understanding}
+\begin{figure}[h]
+	\centering
+	\noindent\parbox[t]{2.2in}{\raggedright%
+	\textbf{Fonctions rétrospectives :}
+	\begin{itemize}[topsep=0pt,itemsep=-2pt,leftmargin=15pt]
+		\item \textit{Agreement }
 		\begin{itemize}
-			\item \textit{Acknowledge}
-			\item \textit{Repeat-Rephrase}
-			\item \textit{Completion}
+			\item \textit{Accept}
+			\item \textit{Accept-Part}
+			\item \textit{Maybe}
+			\item \textit{Reject-Part}
+			\item \textit{Reject}
+			\item \textit{Hold}
 		\end{itemize}
-		\item \textit{Correct-Misspeaking}
-	\end{itemize}
-	\item \textit{Answer}
-	\item \textit{Information-Relation}
-\end{itemize}
-}%
-\parbox[t]{2.2in}{\raggedright%
-\textbf{Fonctions \textit{forward-looking}}
-\begin{itemize}[topsep=0pt,itemsep=-2pt,leftmargin=15pt]
-	\item \textit{Statement}
-	\begin{itemize}
-		\item \textit{Assert}
-		\item \textit{Reassert}
-		\item \textit{Other-Statement}
-	\end{itemize}
-	\item \textit{Influencing Addressee Future Action}
-	\begin{itemize}
-		\item \textit{Open-Option}
-		\item \textit{Directive}
+		\item \textit{Understanding}
 		\begin{itemize}
-			\item \textit{Info-Request}
-			\item \textit{Action-Directive}
+			\item \textit{Signal-Non-Understanding}
+			\item \textit{Signal-Understanding}
+			\begin{itemize}
+				\item \textit{Acknowledge}
+				\item \textit{Repeat-Rephrase}
+				\item \textit{Completion}
+			\end{itemize}
+			\item \textit{Correct-Misspeaking}
 		\end{itemize}
+		\item \textit{Answer}
+		\item \textit{Information-Relation}
 	\end{itemize}
-	\item \textit{Committing Speaker Future Action}
-	\begin{itemize}
-		\item \textit{Offer}
-		\item \textit{Commit}
+	}%
+	\parbox[t]{2.2in}{\raggedright%
+	\textbf{Fonctions prospectives :}
+	\begin{itemize}[topsep=0pt,itemsep=-2pt,leftmargin=15pt]
+		\item \textit{Statement}
+		\begin{itemize}
+			\item \textit{Assert}
+			\item \textit{Reassert}
+			\item \textit{Other-Statement}
+		\end{itemize}
+		\item \textit{Influencing Addressee Future Action}
+		\begin{itemize}
+			\item \textit{Open-Option}
+			\item \textit{Directive}
+			\begin{itemize}
+				\item \textit{Info-Request}
+				\item \textit{Action-Directive}
+			\end{itemize}
+		\end{itemize}
+		\item \textit{Committing Speaker Future Action}
+		\begin{itemize}
+			\item \textit{Offer}
+			\item \textit{Commit}
+		\end{itemize}
+		\item \textit{Performative}
+		\item \textit{Other Forward Function}
 	\end{itemize}
-	\item \textit{Performative}
-	\item \textit{Other Forward Function}
-\end{itemize}
 
-}%
-\parbox[t]{2.2in}{\raggedright%
-\textbf{Traits énonciatifs}
-\begin{itemize}[topsep=0pt,itemsep=-2pt,leftmargin=15pt]
-	\item \textit{Information Level}
-	\begin{itemize}
+	}%
+	\parbox[t]{2.2in}{\raggedright%
+	\textbf{Niveau d'information :}
+	\begin{itemize}[topsep=0pt,itemsep=-2pt,leftmargin=15pt]
 		\item \textit{Task}
 		\item \textit{Task Management}
 		\item \textit{Communication Management}
 		\item \textit{Other}
 	\end{itemize}
-	\item \textit{Communicative Status}
+	\vspace{0.5cm}
+	\textbf{Statut communicatif :}
 	\begin{itemize}
 		\item \textit{Abandoned}
-		\item \textit{Interpretable}
+		\item \textit{Uninterpretable}
+		\item \textit{Self-talk}
 	\end{itemize}
-	\item \textit{Syntactic Features}
-	\begin{itemize}
-		\item \textit{Conventional Form}
-		\item \textit{Exclamatory Form}
-	\end{itemize}
-\end{itemize}
 
-}
+	}
+	\caption{Taxonomie DAMSL}
+	\label{fig:DAMSLTaxonomy}
+\end{figure}
 
-\end{center}
+Les classes situées au premier niveau des listes imbriquées sont appelées \og dimensions \fg{} par \citeauthor{core1997coding}. Les dimensions sont indépendantes les unes des autres. Ainsi par exemple un énoncé peut à la fois acquitter une question (\textit{Acknowledge}) et y répondre (\textit{Answer}). Toutes les dimensions sont optionnelles. Tous les énoncés n'ont pas non plus forcément une étiquette dans chaque catégorie (par exemple, il est possible d'avoir une fonction prospective mais aucune fonction rétrospective), à l'exception du niveau d'information qui doit toujours être indiqué.
 
-Les classes situées au premier niveau des listes imbriquées sont appelées <<dimensions>> par \citeauthor{core1997coding}. Les dimensions de fonctions sont indépendantes les unes des autres. Ainsi par exemple un énoncé peut à la fois acquitter une question (\textit{Signal-Understanding - Acknowledge}) et y répondre (\textit{Answer}). En revanche, les dimensions de la taxonomie des traits énonciatifs représentent des ensembles de classes mutuellement exclusives.
-
-DAMSL est le premier schéma d'annotation à implémenter une approche multidimensionnelle, permettant d'assigner de multiples labels aux énoncés. L'utilité de la taxonomie qui y est décrite est prouvée par le nombre important de travaux s'appuyant dessus, ce qui en fait \textit{de facto} un standard en analyse du dialogue. Cependant, comme souligné par \citet{bunt2006dimensions}, les dimensions et les couches employées dans DAMSL ne sont pas discutées, manquent de signification conceptuelle, et ne s'appuient sur aucun fondement théorique. Comme nous le verrons dans la sous-section suivante, DIT++, lui, tente de proposer un système fondé sur des bases théoriques solides : la théorie de l'interprétation dynamique du dialogue (\textit{Dynamic Interpretation Theory}).
+DAMSL est le premier schéma d'annotation à implémenter une approche multidimensionnelle, permettant d'assigner de multiples étiquettes aux énoncés. L'utilité de la taxonomie qui y est décrite est prouvée par le nombre important de travaux s'appuyant dessus, ce qui en fait \textit{de facto} un standard en analyse du dialogue. Cependant, comme souligné par \citet{bunt2006dimensions}, les dimensions et les \og couches \fg{} (les quatre catégories d'étiquettes) employées dans DAMSL ne sont pas discutées, manquent de signification conceptuelle, et ne s'appuient sur aucun fondement théorique. Comme nous le verrons dans la sous-section suivante, DIT++, lui, tente de proposer un système fondé sur des bases théoriques solides.
 
 \subsection{DIT++}
 \label{subsec:DIT}
 
-DIT++ \cite{bunt2009dit++}, comme DAMSL, cherche à modéliser les actes du dialogue. Les actes sont interprétés comme des opérations de mise à jour appliquées à l'état informationnel des participants de la conversation. Dans cette perspective, \citeauthor{bunt2009dit++} définit les actes du dialogue comme la conjonction de deux éléments : leur \textit{contenu sémantique} et leur \textit{fonction communicative}. Le contenu sémantique spécifie les objets, propositions et toutes les choses sur lesquelles porte l'acte. La fonction communicative spécifie la manière dont l'acte est supposé impacter l'état informationnel de l'allocutaire. Par exemple, la phrase <<vous avez bientôt fini ?>> peut être interprétée comme une question littérale (le locuteur veut savoir si l'allocutaire est sur le point de finir une tâche), ou comme une expression d'exaspération (le locuteur est gêné par l'activité de l'allocutaire). C'est cette distinction qui doit être capturée par la notion de fonction communicative. \citeauthor{bunt2006dimensions} formalise la notion d'acte du dialogue comme suit \cite{bunt2009dit++} :
+DIT++, comme DAMSL, cherche à modéliser les actes du dialogue. Sa taxonomie est une extension de celle de la théorie de l'interprétation dynamique (\textit{Dynamic Interpretation Theory}), originellement basée sur DAMSL \cite{bunt2009dit++}. Dans ce schéma, les actes sont interprétés comme des opérations de mise à jour appliquées à l'état informationnel des participants de la conversation. Dans cette perspective, \citeauthor{bunt2009dit++} définit les actes du dialogue comme la conjonction de deux éléments : leur \textit{contenu sémantique} et leur \textit{fonction communicative}. Le contenu sémantique spécifie les objets, propositions et toutes les choses sur lesquelles porte l'acte. La fonction communicative spécifie la manière dont l'acte est supposé impacter l'état informationnel de l'allocutaire. Par exemple, la phrase \og \textit{vous avez bientôt fini ?} \fg{} peut être interprétée comme une question littérale (le locuteur veut savoir si l'allocutaire est sur le point de finir une tâche), ou comme une expression d'exaspération (le locuteur est gêné par l'activité de l'allocutaire). C'est cette distinction qui doit être capturée par la notion de fonction communicative. \citeauthor{bunt2006dimensions} formalise la notion d'acte du dialogue comme suit \cite[pg. 13]{bunt2009dit++} :
 
 \begin{displayquote}
-Un acte du dialogue est une unité de description sémantique du comportement communicatif dans le dialogue, précisant comment le comportement est supposé changer l'état informationnel d'un participant qui aurait correctement compris et interprété le comportement. [...] Formellement, un acte du dialogue et un opérateur de mise à jour d'un état informationnel qui s’interprète en appliquant une fonction communicative à un contenu sémantique. \footnote{\textit{<<A dialogue act is a unit in the semantic description of communicative behaviour in dialogue, specifying how the behaviour is intended to change the information state of a dialogue participant who understands the behaviour correctly. [...] Formally, a dialogue act is an information-state update operator construed by applying a communicative function to a semantic content.>>}}
+\og \textit{Un acte du dialogue est une unité de description sémantique du comportement communicatif dans le dialogue, précisant comment le comportement est supposé changer l'état informationnel d'un participant qui aurait correctement compris et interprété le comportement. [...] Formellement, un acte du dialogue et un opérateur de mise à jour d'un état informationnel qui s’interprète en appliquant une fonction communicative à un contenu sémantique. \footnote{\textit{\og A dialogue act is a unit in the semantic description of communicative behaviour in dialogue, specifying how the behaviour is intended to change the information state of a dialogue participant who understands the behaviour correctly. [...] Formally, a dialogue act is an information-state update operator construed by applying a communicative function to a semantic content.} \fg}} \fg
 \end{displayquote}
 
 \subsubsection{Dimensions}
+\label{subsubsec:dimensions}
 
 Dans son panorama des taxonomies d'annotation des actes du dialogue, \citet{popescu2005dialogue} note que les taxonomies multi-dimensionnelles semblent bénéficier d'une justification théorique au vu de la multiplicité des fonctions que les énoncés peuvent avoir. Néanmoins, le choix des dimensions à intégrer dans un schéma d'annotation devrait lui-même être justifié théoriquement. Il avance six aspects des énoncés qui devraient être pris en compte pour déterminer ces dimensions :
 
 \begin{enumerate}
 	\item Actes du langage : cet aspect correspond à la catégorisation traditionnelle des actes du langage en cinq classes principales, qui bénéficie déjà de solides bases théoriques \cite{austin1975how}
 	\item Tour de parole : les conclusions du champs de l'analyse du dialogue montrent que dans les conversations, des énoncés ont la fonction particulière de gérer les mécanismes de gestion du tour de parole \cite{shriberg2004icsi}
-	\item Paires adjacentes (\textit{<<adjacency pairs>>}) : l'analyse de la conversation montre également que des couples d'énoncés sont souvent appareillés relativement à leurs fonctions communicatives, comme par exemple les énoncés de type <<réponse>> et les énoncés de type <<question>> \cite{levinson1983pragmatics,schegloff1973opening}
+	\item Paires adjacentes (\textit{adjacency pairs}) : l'analyse de la conversation montre également que des couples d'énoncés sont souvent appareillés relativement à leurs fonctions communicatives, comme par exemple les énoncés de type \og réponse \fg et les énoncés de type \og question \fg{} \cite{levinson1983pragmatics,schegloff1973opening}
 	\item Organisation thématique des conversations : les études en analyse de la conversation ont également démontré que les conversations sont structurées en successions d'épisodes thématiques, au cours desquels les sujets abordés sont amenés à évoluer, et que des énoncés servent à organiser cette évolution \cite{schegloff1973opening}
 	\item Structure rhétorique : similairement à ce que \citet{thompson1987rhetorical} ont montré pour les discours monologues à travers la théorie RST (\textit{Rhetorical Structure Theory}), des relations discursives rhétoriques peuvent être établies entre les énoncés des conversations \cite{asher2003logics}
-	\item Politesse : les fonctions des énoncés en terme de politesse et de gestion sociale du discours peuvent être formalisées en terme de gestion de la "face", chaque énoncé de ce type pouvant être analysé selon deux axes : d'abord, s'il s'agit de la face du locuteur ou de l'allocutaire, ensuite, si l'interaction vise à \textit{sauver} ou à \textit{menacer} la face \cite{brown1987politeness}
+	\item Politesse : les fonctions des énoncés en termes de politesse et de gestion sociale du discours peuvent être formalisées en termes de gestion de la "face", chaque énoncé de ce type pouvant être analysé selon deux axes : d'abord, s'il s'agit de la face du locuteur ou de l'allocutaire, ensuite, si l'interaction vise à \textit{sauver} ou à \textit{menacer} la face \cite{brown1987politeness}
 \end{enumerate}
 
-\citeauthor{bunt2009dit++} assoit la crédibilité théorique des dimensions qu'il choisit en les basant sur ces six aspects des actes du dialogue. Par ailleurs, il propose de définir précisément ce qu'\textit{est} un ensemble de dimensions. Dans DIT++, chaque dimension regroupe des fonctions communicatives portant toutes sur un même aspect de ce que peut être la contribution d'un locuteur à la conversation, de manière à ce que : (1) les participants puissent communiquer autour de cet aspect, et (2) cette communication s'opère de façon indépendante aux autres aspects, c'est-à-dire qu'un énoncé peut avoir une fonction communicative dans une dimension qui soit totalement indépendante des fonctions communicatives qu'il peut avoir dans d'autres dimensions.
+\citeauthor{bunt2009dit++} assoit la crédibilité théorique des dimensions qu'il choisit en les basant sur ces six aspects des actes du dialogue. Par ailleurs, il propose de définir précisément ce qu'est un ensemble de dimensions. Dans DIT++, chaque dimension regroupe des fonctions communicatives portant toutes sur un même aspect de ce que peut être la contribution d'un locuteur à la conversation, de manière à ce que : (1) les participants puissent communiquer autour de cet aspect, et (2) cette communication s'opère de façon indépendante aux autres aspects, c'est-à-dire qu'un énoncé peut avoir une fonction communicative dans une dimension qui soit totalement indépendante des fonctions communicatives qu'il peut avoir dans d'autres dimensions.
 
-Les dimensions retenues sont les suivantes : (1) \textit{Task/Activity}, pour tout ce qui se rapporte à la tâche qui est l'objet de la conversation ; (2) \textit{Auto-Feedback}, pour les actes signifiant le niveau de compréhension et d'interprétation du locuteur; (3) \textit{Allo-Feedback}, comme la dimension précédente mais pour l'allocutaire; (4) \textit{Turn Management}, pour les actes portant sur la gestion du tour de parole; (5) \textit{Time Management}, pour les situations où il est nécessaire de signifier que le locuteur a besoin de plus de temps pour contribuer ou qu'il faut faire une pause dans le dialogue; (6) \textit{Contact Management}, pour les actes qui servent à établir et maintenir la communication; (7) \textit{Own Communication Management}, pour les actes servant à indiquer que le locuteur prépare ou modifie sa contribution au dialogue; (8) \textit{Partner Communication Management}, pour les actes effectués par un participant endossant le rôle d'allocutaire, servant à assister son partenaire dans la formulation de sa contribution; (8) \textit{Discourse Structure Management}, pour les actes servant à structurer thématiquement la conversation; et (9) \textit{Social Obligations Management}, pour les actes de gestion sociale du dialogue.
+Les dimensions retenues sont les suivantes : (1) \textit{Task/Activity}, pour tout ce qui se rapporte à la tâche qui est l'objet de la conversation ; (2) \textit{Auto-Feedback}, pour les actes signifiant le niveau de compréhension et d'interprétation du locuteur; (3) \textit{Allo-Feedback}, comme la dimension précédente mais pour l'allocutaire; (4) \textit{Turn Management}, pour les actes portant sur la gestion du tour de parole; (5) \textit{Time Management}, pour les situations où il est nécessaire de signifier que le locuteur a besoin de plus de temps pour contribuer ou qu'il faut faire une pause dans le dialogue; (6) \textit{Contact Management}, pour les actes qui servent à établir et maintenir la communication; (7) \textit{Own Communication Management}, pour les actes servant à indiquer que le locuteur prépare ou modifie sa contribution au dialogue; (8) \textit{Partner Communication Management}, pour les actes effectués par un participant endossant le rôle d'allocutaire, servant à assister son partenaire dans la formulation de sa contribution; (9) \textit{Discourse Structure Management}, pour les actes servant à structurer thématiquement la conversation; et (10) \textit{Social Obligations Management}, pour les actes de gestion sociale du dialogue.
+
+Les énoncés peuvent avoir au plus une fonction par dimension.
 
 \subsubsection{Fonctions}
 
 Le schéma d'annotation propose deux types de fonctions communicatives : les fonctions génériques (\textit{general-purpose functions}), qui se retrouvent dans toutes les dimensions (\textit{e.g.} \textit{propositional question}, \textit{address request}), et les fonctions spécifiques (\textit{dimension-specific functions}), qui ne peuvent être appliquées qu'à une dimension particulière (\textit{e.g.} \textit{turn grabbing}, \textit{greeting}). La table \ref{fig:dimensionSpecificFunctions} fournit quelques exemples de fonctions spécifiques pour chaque dimension de la taxonomie.
 
-Les fonctions génériques sont elles mêmes réparties en deux catégories principales : les fonctions de transfert d'information et les fonctions de discussion d'action. La première catégorie comporte les fonctions d'élicitation et de procuration d'information. La seconde comporte les fonctions servant à gérer la planification d'actions, correspondant typiquement aux actes commissifs et directifs. Voici leur liste complète (les fonctions elles-mêmes sont notées en caractères monospace) :
-
-\begin{itemize}
-	\item \textit{Information Transfer Functions}
-	\begin{itemize}
-		\item \textit{Information-Seeking Functions}
-			\begin{itemize}
-				\item \textit{Direct Questions}
-				\begin{itemize}
-					\item \texttt{Propositional Question}, \texttt{Set Question}, \texttt{Alternatives Question}, \texttt{Check\\ Question}, etc.
-				\end{itemize}
-				\item \textit{Indirect Questions}
-				\begin{itemize}
-					\item \texttt{Indirect Propositional Question}, \texttt{Indirect Set Question}, \texttt{Indirect\\ Alternatives Question}, \texttt{Indirect Check Question}, etc.
-				\end{itemize}
-			\end{itemize}
-		\item \textit{Information-Providing Functions:}
-			\begin{itemize}
-				\item \textit{Informing Functions:}
-				\begin{itemize}
-					\item \texttt{Inform}, \texttt{Agreement}, \texttt{Disagreement}, \texttt{Correction}
-					\item \textit{Informs with Rhetorical or Attitudinal Functions, such as elaboration, justification, exemplification.. and warning, threat,..}
-				\end{itemize}
-				\item \textit{Answer Functions:}
-				\begin{itemize}
-					\item \texttt{Propositional Answer}, \texttt{Set Answer}, \texttt{Confirmation}, \texttt{Disconfirmation}
-				\end{itemize}
-			\end{itemize}
-
-	\end{itemize}
-	\item \textit{Action Discussion Functions}
-	\begin{itemize}
-		\item \textit{Commissives}
-		\begin{itemize}
-			\item \texttt{Offer}, \texttt{Promise}, \texttt{Address Request}
-			\item \textit{other commissives, expressable by means of performative verbs}
-		\end{itemize}
-		\item \textit{Directives:}
-		\begin{itemize}
-			\item \texttt{Instruction}, \texttt{Address Request}, \texttt{Indirect Request}, \texttt{(Direct) Request},\\ \texttt{Suggestion}
-			\item \textit{other directives, such as advice, proposal, permission, encouragement, urge,..., expressable by means of performative verbs}
-		\end{itemize}
-	\end{itemize}
-\end{itemize}
-
-\begin{table}
+\begin{table}[h]
 	\centering
-	\begin{tabular}{c c c}
+	\begin{tabular}{ll}
 		\toprule
-		Dimension & Exemples de fonction \\
+		\multicolumn{1}{c}{Dimension} & \multicolumn{1}{c}{Exemples de fonction} \\
 		\midrule
 		\textit{Task / Activity} & \textit{Open Meeting, Appoint, Hire } \\
 		\textit{Auto-Feedback} & \textit{Perception negative, Evaluation positive} \\
@@ -351,6 +287,27 @@ Les fonctions génériques sont elles mêmes réparties en deux catégories prin
 	\label{fig:dimensionSpecificFunctions}
 \end{table}
 
+Les fonctions génériques sont elles mêmes réparties en deux catégories principales : les fonctions de transfert d'information et les fonctions de discussion d'action. La première catégorie comporte les fonctions de sollicitation et de procuration d'information. La seconde comporte les fonctions servant à gérer la planification d'actions, correspondant typiquement aux actes commissifs et directifs. La liste complète est fournie en table \ref{fig:DITClasses} (les fonctions elles-mêmes sont notées en italique) :
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{rrX}
+		\toprule
+		\multicolumn{1}{c}{Type} & \multicolumn{1}{c}{Catégorie} & \multicolumn{1}{c}{Classes} \\
+		\midrule
+		Information & Sollicitatifs & \textit{Propositional Question}, \textit{Set Question}, \textit{Alternatives Question}, \textit{Check Question}, \textit{etc.}, et équivalents indirects (\textit{e.g.} \textit{Indirect Check Question}) \\
+		\cmidrule(r){2-3}
+		& Procuratifs & \textit{Inform}, \textit{Agreement}, \textit{Disagreement}, \textit{Correction}, \textit{Propositional Answer}, \textit{Set Answer}, \textit{Confirmation}, \textit{Disconfirmation}, autres formes de \textit{Inform} dotées de fonctions rhétoriques, comme l’élaboration et la justification, ou de fonctions attitudinales, comme les avertissements et les menaces \\
+		\cmidrule(r){1-3}
+		Action & Commissifs & \textit{Offer}, \textit{Promise}, \textit{Address Request}, autres expressifs exprimables via verbes performatifs \\
+		\cmidrule(r){2-3}
+		& Directifs & \textit{Instruction}, \textit{Address Request}, \textit{Indirect} \textit{Request}, \textit{Request}, \textit{Suggestion}, autres directifs exprimables via des verbes performatifs, comme les conseils, les encouragements \textit{etc.} \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Fonctions communicatives génériques de la taxonomie DIT++}
+	\label{fig:DITClasses}
+\end{table}
+
 % Deux approches peuvent être adoptées pour définir des fonctions communicatives. La première, plus superficielle, consiste à déterminer des classes basées sur la forme des énoncés (\textit{e.g.}, question, exclamation, \textit{etc.}). La seconde, plus "profonde", consiste à déterminer des classes en fonction des effets attendus de l'énoncé sur les allocutaires (\textit{e.g.} requête, affirmation, \textit{etc.}). DIT++ choisit la seconde approche, pour deux raisons.
 
 % DIT++, comme son nom l'indique, est développé conjointement à une théorie des l'interprétation dynamique (\textit{Dynamic Interpretation Theory}) du dialogue. Cette théorie veut que chaque énoncé puisse contenir plusieurs actes de mise à jour de l'état informationnel non seulement des allocutaires mais également du locuteur lui-même.
@@ -363,53 +320,52 @@ Elle peut être étendue pour prendre en compte plus finement certains phénomè
 
 Ainsi, le schéma DIT++, facilement extensible et appuyé par un vaste ensemble de travaux antérieurs, a été le socle d'un standard international pour l'annotation dialogique : ISO 24617-2 \cite{bunt2012iso}.
 
-\section{Analyse des conversations écrites en ligne}
+\section{Classification des énoncés dans les conversations écrites en ligne }
 \label{sec:online_written_conversation_analysis}
 
-\todo[inline]{\textit{Dialogue act recognition in synchronous and asynchronous conversations} \cite{tavafi2013dialogue} : évaluation des algorithmes de classification supervisée état de l'art pour la classification des DA dans BC3 (email), CNET (forum), MRDA (réunions) et SWBD (téléphone).}
+L'idée de chercher à classifier les énoncés des conversations écrites en ligne n'est pas nouvelle. En particulier, plusieurs travaux ont cherché à développer des méthodes pour parvenir à classifier automatiquement les énoncés (ou à défaut les phrases, voire les messages entiers) de courriels, de forums et de chats en termes d'actes du dialogue. Dans le domaine du traitement automatique du langage, l'approche supervisée domine les tâches de classification. C'est à cet aspect que s'intéressent \citet{tavafi2013dialogue} : ils étudient les travaux antérieurs du domaine de la modélisation d'actes du dialogue et proposent un panorama des techniques de classification supervisée. Ils concluent que le modèle SVM-HMM, qui prédit les étiquettes séquentiellement, est le plus performant (comparé aux champs conditionnels markoviens (CRFs) et à un SVM multi-classes) sur des corpus de courriels, de forums, de réunions et de conversations téléphoniques. Le travail de \citeauthor{tavafi2013dialogue} a néanmoins l'inconvénient de ne pas définir ce qu'est un acte de dialogue, et se contente d'utiliser les taxonomies utilisées par les corpus dont ils se servent. C'est problématique parce que ces taxonomies sont généralement très spécifiques à leurs domaines. Dans cette section, nous ne nous intéresserons pas aux médiums retranscrits, mais uniquement aux courriels, aux forums et aux chats.
+
+% JOTY 2011
+% LIN 2009
+% IVANOVIC 2008
+% KIM 2010a
+% KIM 2010b
 
 \subsection{Courriels}
 \label{subsec:emails}
 
-\todo[inline]{\textit{Learning to classify email into \quotes{speech acts}} \cite{cohen2004learning} : classification supervisée des courriels en termes \quotes{d'actes du discours}, différents de ceux décrits par Austin et Searle, et plus spécifiques au domaine (nom plus verbe).}
+Un bref examen de n'importe quel corpus de courriels permet de constater que les messages présentent plusieurs caractéristiques qui les rend très différentes des transcriptions tirées de conversations parlées. D'abord, le fait que les messages ne soient pas entièrement constitués de contenu \og neuf \fg. Pour \citet{lampert2009segmenting}, les courriels peuvent être découpés en trois zones : les zones de locution (\textit{sender zones}), qui contiennent le texte écrit par l'expéditeur ; les zones de contenu cité (\textit{quoted conversation zones}), qui contiennent à la fois le contenu retransmis d'autres conversations et le contenu cité du message auquel l'auteur répond ; et les zones d'encadrement (\textit{boilerplate zones}) qui contiennent le contenu réutilisé sans modification dans plusieurs messages, comme la signature ou les coordonnées de l'auteur. Si l'analyse de la conversation peut profiter de l'extraction d'informations tirées des zones d'encadrement, et si les zones de citations peuvent aider des systèmes à lier les messages entre eux, ce sont surtout les zones de locution qui nous intéressent si l'on cherche à analyser les conversations en termes d'actes du dialogue.
 
-\todo[inline]{\textit{Segmenting email message text into zones} \cite{lampert2009segmenting} : segmentation des courriels en zones prototypiques.}
-
-\todo[inline]{\textit{Classifying speech acts using verbal response modes} \cite{lampert2006classifying} : utilise la taxonomie VRM (Verbal Response Mode) des actes du discours pour catégoriser les énoncés rencontrés dans un corpus de courriels, et propose un classifieur supervisé.}
-
-\todo[inline]{\textit{A classification scheme for annotating speech acts in a business email corpus} \cite{de2013classification} : schéma d'annotation des actes du discours dans un corpus de courriels d'entreprise (Enron).}
+Quelques travaux cherchent à identifier ces actes. \citet{cohen2004learning} emploient des techniques de classification supervisée pour classer chaque courriel dans une ontologie d'\og actes du discours des courriels \fg. Chaque élément de cette ontologie est composé d'un nom et d'un verbe (\textit{e.g.} \textit{negotiate meeting} ou \textit{request information}). Cette ontologie ne s'intègre pas nécessairement au paradigme d'analyse introduite par les théories des actes du dialogue que nous avons vu, notamment parce que ce sont les messages et non les énoncés qui sont classés. \citet{lampert2006classifying} tentent, eux, d'annoter les \textit{énoncés} présents dans les courriels. Les classes utilisées sont basées sur les VRM (\textit{Verbal Response Modes}), une taxonomie d'actes du discours qu'ils utilisent pour capturer à la fois l'aspect littéral et pragmatique des énoncés : chaque énoncé est donc classé deux fois, une par aspect, chaque fois avec la même taxonomie. Les résultats encourageants d'une machine à vecteurs de support (SVM) poussent \citeauthor{lampert2009segmenting} à penser que cette approche est crédible, néanmoins les classes de la taxonomie VRM (\textit{Disclosure}, \textit{Edification}, \textit{Advisement}, \textit{Confirmation}, \textit{Question}, \textit{Acknowledgement}, \textit{Interpretation} et \textit{Reflection}) ne sont pas satisfaisantes pour nos besoins, ni en termes de finesse ni en termes d'exhaustivité.
 
 \subsection{Forums}
 \label{subsec:forums}
 
-\todo[inline]{\textit{Tagging and linking web forum posts} \cite{kim2010tagging} : annotation de messages de forums (CNET), puis classification et liaison automatique, dans une perspective d'améliorer l'accès aux informations liées à la résolution de problèmes.}
+\citet{qadir2011classifying} font la distinction entre actes du discours et texte expositif (qui apporte de l'information factuelle), et considèrent que les messages de forums diffèrent des documents monologues en ce qu'ils contiennent un mélange des deux, formant ainsi un genre \og hybride \fg. Ils cherchent à classer les phrases de ces messages, d'abord entre actes du discours et phrases expositives, et ensuite entre quatre catégories tirées de la taxonomie de \citet{searle1976taxonomy} : les commissifs, les directifs, les expressifs et les représentatifs (ils ignorent les déclaratifs parce qu'ils sont trop rares dans leur corpus). Cette distinction entre texte expositif et actes du discours semble surprenante, puisque d'une certaine façon, en retirant les énoncés expositifs à la catégorie des représentatifs, les auteurs nient leur caractère illocutoire. Néanmoins leur travail rapporte des résultats intéressants, d'autant plus que la construction des traits utilisés par leur classifieur (un SVM) ne demande pas d'analyse linguistique, et se prête bien aux phrases peu grammaticales que l'on peut trouver sur des forums.
 
-\todo[inline]{\textit{Classifying sentences as speech acts in message board posts} \cite{qadir2011classifying} : classification supervisée de messages de forums en quatre catégories inspirées de Searle, distinctes de la classe d'exposition qui n'est pas considérée comme une classe d'actes du discours.}
+Un autre travail qu'il est pertinent de mentionner est celui de \citet{kim2010tagging}. Ils s'intéressent également aux messages des forums, mais cette fois dans une perspective d'aide à la résolution des problèmes. Le problème qu'ils se donnent, annoter automatiquement les conversations s'opérant sur les forums du site CNET, se découpe en deux tâches : (1) la classification des messages, et (2) la classification des \textit{liens} entre les messages. La taxonomie qu'ils adoptent pour identifier la structure du contenu rappelle le concept de paires adjacentes vu en \ref{subsubsec:dimensions}. Les classes sont divisées en deux groupes : \textit{Question} et \textit{Answer} (\textit{e.g.} \textit{Question-Add}, \textit{Answer-Objection}), plus trois classes isolées qui sont utiles pour parler de problèmes et de solutions (\textit{Resolution}, \textit{Reproduction} et \textit{Other}). Cette taxonomie paraît très utile pour analyser des conversations porteuses de demandes d'assistance. Néanmoins il ne s'agit pas vraiment d'analyse du dialogue mais plutôt d'analyse de structure de conversation ; le fait de classer les messages et les conversations ignore complètement le concept d'énoncé. L'information apportée se situe à un niveau différent, et on peut parfaitement imaginer effectuer les deux analyses (l'analyse \quotes{macro} de \citeauthor{kim2010tagging} et une analyse plus proche de l'énoncé) en parallèle.
+
+% La taxonomie qu'ils adoptent pour la première tâche est directement construite autour des notions de \textit{problème} et de \textit{solution}. En effet ils proposent d'annoter les conversations entières avec la combinaison d'une classe du groupe \textit{Solution Type} et d'une classe du groupe \textit{Problem Source} (\textit{e.g.} \textit{Install - Software} ou \textit{Documentation - Programming}, ou avec une classe tirée d'une catégorie \og divers \fg (\textit{Spam} et \textit{Other}). En ce qui concerne les messages eux-mêmes, ils sont annotés avec des classes divisées en deux groupes : \textit{Question} et \textit{Answer} (\textit{e.g.} \textit{Question-Add}, \textit{Answer-Objection}), plus trois classes isolées (\textit{Resolution}, \textit{Reproduction} et \textit{Other}).
 
 \subsection{Chats}
 \label{subsec:chats}
 
-\todo[inline]{\textit{Information-seeking chat: dialogue management by topic structure} \cite{stede2004information} : décrit un genre de dialogue basé sur la demande d'information, et propose une approche pour modéliser l'évolution des topiques discutés, basée sur la notion de \quotes{structures thématiques pondérées} (\textit{weighted topic structures}).}
+Les chats représentent également un canal fréquemment utilisé pour communiquer autour de la résolution de problèmes, et se distinguent des courriels et forums par leur caractère synchrone. Dans le domaine de l'assistance, \citet{stede2004information} notent qu'il existe des différences fondamentales entre les chats de nature exploratoire et axés vers la recherche d'information (\textit{information-seeking chats}), comme par exemple ceux où un client s'adresse à un agent pour obtenir plus d'informations sur un produit, et ceux orientés autour de l'accomplissement d'une tâche. Ils observent notamment que si les conversations tournées vers l'obtention d'information sont articulées autour d'une série de topiques et sous-topiques liés au domaine, les autres sont plutôt mues par un ensemble de sous-objectifs.
 
-\todo[inline]{\textit{Learning dialogue management models for task-oriented dialogue with parallel dialogue and task streams} \cite{ha2013learning} : exploration de la tâche de classification automatique des actes du dialogue dans des dialogues synchrones à deux, sur un corpus dérivé du e-commerce.}
+\citet{ha2013learning} s'intéressent à ces dernières, dans le cadre du développement de systèmes de dialogue. Ils choisissent une approche basée sur la classification supervisée d'actes de dialogue à la fois pour identifier les énoncés de l'utilisateur et pour choisir le type de réponse du système. Bien qu'ils n'évoquent pas directement le terme \og chat \fg, ils se basent sur un corpus composé de conversations textuelles entre participants humains communiquant de manière synchrone via une interface web, ce qui revient au même. Néanmoins, ces conversations sont plus des exemples de tutorat que d'assistance à la résolution de problème, ce qui éloigne ce travail de notre objectif. Cet aspect se retrouve dans la taxonomie d'actes de dialogue employée, qui fait la distinction entre ceux du tuteur (\textit{e.g.} \textit{hint}, \textit{positive feedback}) et de l'élève (\textit{e.g.} \textit{request for feedback}), certaines classes pouvant être appliquées aux énoncés des deux (\textit{e.g.} \textit{statement}, \textit{question}). Ils parviennent prédire à la fois le timing des interventions du tuteur, mais également la type d'intervention. Leurs résultats dépassent l'état-de-l'art en confiant chacune de ces sous-tâches (timing et type) à un classifieur différent.
 
-\subsection{Problématiques spécifiques aux demandes d'assistance}
-\label{subsec:assistance_specific_problematics}
-
-\todo[inline]{\textit{A scheme for annotating problem solving actions in dialogue} \cite{sikorski1997scheme} : décrit une taxonomie d'actions présentes au niveau de la résolution de problème (de plus haut niveau et distincte du niveau de l'énoncé où se trouvent les actes du discours), pour un corpus de dialogues parlés, TRAINS-93.}
+\citet{ivanovic2005automatic} constate que les messages envoyés lors de chats peuvent contenir plus d'un énoncé, et il note donc qu'avant de chercher à classer les actes du dialogue, il faut d'abord identifier leurs frontières textuelles. Il avance que les chats peuvent être découpés en séquences de \textit{tours}, au cours desquels un participant peut envoyer un ou plusieurs messages avant d'attendre une réponse de la part d'un autre participant, chacun de ces messages pouvant contenir un certain nombre d'énoncés. Ses expériences sur un corpus composé de conversations extraites d'un service de support client montre que les techniques statistiques d'apprentissage machine sont très efficaces pour réaliser cette segmentation. Dans un travail séparé, \citet{ivanovic2005dialogue} cherche à classer ces énoncés dans une taxonomie dérivée de DAMSL. Ils atteint une précision de 80\% en combinant un classifieur naïf de Bayes et un modèle de $n$-grammes d'actes du dialogue. \citeauthor{kim2012classifying} reprennent la taxonomie de \citeauthor{ivanovic2005dialogue} pour l'appliquer d'abord à un corpus de conversations bipartites \cite{kim2010classifying} puis multipartites \cite{kim2012classifying}. Dans le premier cas, en utilisant un ensemble de traits lexicaux, structurels et capturant les dépendances entre actes du dialogue, et en adoptant une approche d'apprentissage par champs conditionnels markoviens (CRFs), ils parviennent à des résultats proches de 97\%. Si les traits structuraux et les traits de dépendance fonctionnent moins bien pour des conversations multi-partites, les CRFs se révèlent de nouveau extrêmement performants avec des résultats de respectivement 97.80\% et 99.03\% suivant le corpus.
 
 \section{Conclusion et perspectives de recherche}
 \label{sec:conclusion_and_research_perspectives}
 
-On remarque qu'un grand nombre de travaux sur l'analyse des conversations se basent sur le même échantillon de dialogues, le corpus TRAINS. Les dialogues contenus dans ce corpus correspondent à un type bien particulier de conversations fonctionnelles, avec leurs spécificités (comme, par exemple, le fait que tous soient bi-agents plutôt que poly-agents). Ces dialogues ont aussi un focus important sur la planification temporelle des tâches, ce qui n'est pas nécessairement une propriété commune à toutes les situations de résolution de problème.
+Nous avons vu que la recherche théorique en matière d'analyse des conversations en termes d'actes du dialogue est extrêmement fournie, les origines de cette tradition remontant aux années 60 avec l'introduction du concept d'acte du langage \cite{austin1975how, searle1969speech}. Néanmoins, on remarque que les apports théoriques plus récents reposent souvent sur l'étude du même échantillon de dialogues, le corpus TRAINS. C'est le cas de \citet{traum1992conversation, poesio1998towards, core1997coding, bunt2009dit++}. Les dialogues contenus dans ce corpus correspondent à un type bien particulier de conversations fonctionnelles, avec leurs spécificités (comme, par exemple, le fait que tous soient bi-agents plutôt que poly-agents). Ces dialogues ont aussi un focus important sur la planification temporelle des tâches, ce qui n'est pas nécessairement une propriété commune à toutes les situations de résolution de problème. Toujours est-il que ces fondements théoriques ont pu donner naissance à des schémas d'annotation bien établis et à l'utilité démontrée. Nous avons également montré que l'idée d'appliquer ce type d'analyse aux conversations en ligne, et en particulier aux conversations construites autour de la réalisation d'une tâche, a déjà été concrétisée, y compris dans certains cas pour l'aide à la résolution des problèmes. Cependant, on ne peut pas dire que les travaux s'intéressant à ces applications soient particulièrement homogènes en termes de taxonomie, leurs auteurs préférant souvent choisir des classes appropriées à leurs domaines que s'appuyer sur des fondements théoriques généraux.
 
-DIT++ utilise TRAINS aussi ? À vérifier.	
+Une première perspective de recherche intéressante qui nous apparaît est celle du développement d'une théorie de la conversation asynchrone riche. Si les messages instantanés rentrent assez bien dans le cadre de ce que peut être un énoncé tel que résumé par \citet{popescu2005dialogue}, ce n'est pas nécessairement le cas des courriels et des messages postés sur les forums de discussion, pour lesquels un certain nombre de questions peuvent se poser. Pouvons nous, sur ces médiums, parler de gestion de tour de parole, quand tout est géré techniquement par la plate-forme ? Comment se passe la gestion des connaissances communes ? \textit{Quid} des comportements non-verbaux écrits (citations, liens vers de ressources externes, inclusion de contenu multimédia, émoticônes, points d'exclamation multiples \textit{etc.}) ? Une autre idée qui mérite investigation est de savoir s'il est possible spécialiser des schémas d'annotation comme DAMSL ou DIT++ pour le genre des conversations écrites en ligne orientées vers la résolution de problème, et si la taxonomie qui en résulterait peut être employée pour une tâche de classification automatique des énoncés. Enfin, nous prévoyons également de définir formellement ce qu'est un problème et ce qu'est une solution, et comment ces objets apparaissent et évoluent au travers des conversations. Ce travail de formalisation ayant pour but de permettre, à terme, leur modélisation automatique.
 
-Quelles observations fondamentales, faites sur des corpus de dialogues parlés, sont applicables aux conversations écrites en ligne ? Turn-Management ? Comment se passe le <<grounding>> ? Quid des comportements non-verbaux écrits (citations, etc.) ? Impact du caractère asynchrone ?
+\selectlanguage{english}
 
 \bibliographystyle{taln2002}
 \bibliography{biblio}
-
-\nocite{TALN2015,LaigneletRioult09,LanglaisPatry07,SeretanWehrli07}
 
 \end{document}
