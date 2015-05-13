@@ -1,0 +1,72 @@
+changé le titre
+corrigé les fautes signalées
+ajouté une phrase sur la résolution d'anaphores
+"ne sont pas satisfaisantes pour nos besoins, ni en termes de finesse ni en termes d'exhaustivité" => justifié
+les auteurs préférant souvent choisir des classes appropriées à leur domaines que s'appuyer sur des fondements théoriques généraux => justifié
+section remerciements
+
+===================
+DONE
+===================
+
+section 2.2.2. => approches linguistiques" et "modèles computationnels" : je comprends que l'article se focalisent sur les seconds, mais je pense que la question des anaphore se pose aussi sur le type de conversation qui vous intéresse, non ?
+-------------------
+section 4.1 dernière phrase "ne sont pas satisfaisantes pour nos besoins, ni en termes de finesse ni en termes d'exhaustivité : bien trop vague pour tenir lieu d'argument. Il aurait fallu plus détailler
+-------------------
+conclusion "les auteurs préférant souvent choisir des classes appropriées à leur domaines que s'appuyer sur des fondements théoriques généraux" : je vous suivrais totalement dans cette quête de fondements non ad-hoc, qui polluent souvent les recherches en TAL, mais toutefois, il faut une argumentation plus profonde sur l'intérêt d'une telle évolution
+-------------------
+Le titre est trop général. Il devrait être modifié pour laisser apparaître que le sujet de l'article est l'annotation en actes de dialogues. L'analyse argumentative, par exemple, est un autre type d'analyse de dialogue qui n'est pas abordée dans l'article.
+-------------------
+Quelques remarques de forme sur l'aricle pour finir :
+- Traum & Hinkelman remet : remettent
+- indépendante aux autres aspects : des autres aspects...
+- La taxonomie DIT++ a été utilisé : utilisée
+- Ils parviennent prédire : à prédire
+-------------------
+Étant donné le sujet de l'article, le lecteur s'attend à ce que les spécificités des demandes d'assistance soient décrites, ainsi que leur impact sur les théories, schémas d'annotations et techniques de classification. Sans cet aspect, la référence aux conversations d'assistance dans le titre est fortuite.
+
+===================
+WON'T FIX
+===================
+
+La partie classification devrait être restructurée pour approfondir le fonctionnement des méthodes décrites (comment fonctionnent les SVM et autres CRF).
+-------------------
+De plus, les travaux récents en classification devraient être décrits, comme par exemple 
+"Investigating the Contribution of Distributional Semantic Information for Dialogue Act Classification", de Milajevs et al. 2014 
+=> téléphone, pas état de l'art, mais ouvre des pistes pour le type de features utiles
+ou "Semi-supervised learning of dialogue acts using sentence similarity based on word embeddings", Yang et al., 2014, 
+=> paywall, montre que word embeddings > SVM
+"Automatic dialogue act recognition with syntactic features", Kral et al, 2014
+=> paywall, tchèque, montre que les features syntaxiques sont utiles
+"Learning Conditional Random Field with Hierarchical Representations for Dialogue Act Recognition", Zhou et al, 2014, etc.
+=> téléphone, montre que CRF > SVM mais on l'a déjà vu avec un corpus de online written
+-------------------
+- concernant cette fois-ci votre application, il serait intéressant de regarder ce qui a été fait dans la communaité Bugzilla, où le but initial est de travailler sur les rapports de bugs de Mozilla, en classant les messages déposés sur les forums. L'application a ensuite été généralisée. Le sujet est donc assez proche de ce que vous voulez traiter, me semble-t-il.
+
+===================
+TODO / OUT OF SCOPE
+===================
+
+Pour ce qui est des éléments manquants de l'état de l'art, on aurait aimé une table résumant les caractèristiques des autres schémas d'annotation (comme MRDA, par exemple).
+=> MRDA conversations orales de meeting ; se mappent sur SWBD DAMSL (tagset -> téléphone corpus)
+-------------------
+Il serait bien d'ajouter des tableaux comparant les corpus annotés disponibles ainsi que les approches en classification et leurs performances sur ces corpus.
+-------------------
+- Quitte à citer les théories fondatrices en dialgue, et quand vous parlez de suivi des thématiques évoquées, vous pourriez indiquer les travaux de Grosz & Sidner, qui ont été précurseurs dans ce domaine
+=> trois plans, structure de l'intention, structure de l'attention et linguistique
+=> pas d'actes de dialogue/discours, dans tout son bouquin fondamental pas une référence à Austin ni Searle
+=> X intends that Y knows that A, X intends that Y intends to A, X intends that Y intends that X knows A => mapping
+
+===================
+TODO
+===================
+- Dans le même ordre d'idée, vous ne citez Allen que pour le corpus Trains et DAMSL, mais avec Cohen, ils se sont eux intéressés aux aspects liés à la planification de la résolution de "tâche", et compte-tenu de vos intentions déclarées dans la fin de l'article, il serait peut-être intéressant de vous situer un peu plus par rapport à ce qui a été proposé à Rochester sur ce sujet.
+=> planification, reconnaissance de "plans", représentation des connaissances temporelles => pas trop des problématiques qui s'appliquent aux genres de problèmes qu'on a en tête
+-------------------
+- quand vous abordez les aspects plus "analyse de vrais dialogues" avec DAMSL, vous pourriez aussi regarder ce qui a été fait dans le domaine du dialogue oral, où l'approche a été plus fondée justement sur des études de dialogue réels (souvent de type Magicien d''Oz), mais qui ne sont pas si éloignés de vos préoccupation. Les ouvrages récents de Krsitina Jokinen en font un bon panorama
+-------------------
+- pour en finir avec les théories fondatrices, il est dommage (en plus de Schegloff par exemple), de ne pas regarder les analyses de conversation proposées par l'école de Genève, autour d'Eddy Roulet, voire de Jacques Moeschler. Certes ces travaux sont plus connus en linguistique qu'en informatique, mais ils proposent une analyse intéressante des conversations.
+-------------------
+La seule réserve que j'aurais à faire sur ce texte est que la question de l'application de ces modèles aux conservations écrites en ligne est beaucoup plus limitée (2 pages) : l'état de l'art sur le sujet est assez conséquent (section 4), mais trop peu relié avec les parties précédentes. Il aurait été intéressant de lui accorder plus de place rédactionnelle pour mieux saisir les limites des approches ad-hoc développées et démontrer l'intérêt d'adapter une approche de type mutli-dimensionnelle générique (DAMSL ou DIT++) à la question. En l'état, je manque en effet d'information et argumetation : 
+- sur le fait qu'un modèle générique serait plus intéressant que les modèles ad-hoc utilisés dans la littérature
+- sur l'adaptation possible de DIT++ ou DAMSL au problème étudié ici
